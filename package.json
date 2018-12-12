@@ -1,0 +1,33 @@
+{
+  "name": "sf-bridge",
+  "version": "1.0.0",
+  "author": {
+    "name": "lichun"
+  },
+  "description": "bridge",
+  "dependencies": {
+    "rimraf": "^2.6.1"
+  },
+  "devDependencies": {
+    "babel-cli": "^6.3.17",
+    "babel-core": "^6.3.26",
+    "babel-eslint": "^5.0.0-beta9",
+    "babel-loader": "^6.2.0",
+    "babel-plugin-transform-decorators-legacy": "^1.2.0",
+    "babel-preset-es2015-loose": "^6.1.4",
+    "babel-preset-react": "^6.3.13",
+    "babel-preset-stage-0": "^6.3.13",
+    "eslint-config-airbnb": "^15.0.2",
+    "eslint-plugin-react": "^7.1.0"
+  },
+  "license": "MIT",
+  "main": "index.js",
+  "scripts": {
+    "build": "babel src --out-dir lib",
+    "clean": "rimraf lib dist coverage",
+    "lint": "eslint src test",
+    "test": "mocha --compilers js:babel-core/register --recursive --require ./test/setup.js",
+    "test:cov": "babel-node ./node_modules/isparta/bin/isparta cover ./node_modules/mocha/bin/_mocha -- --recursive --require ./test/setup.js",
+    "test:watch": "npm test -- --watch"
+  }
+}
