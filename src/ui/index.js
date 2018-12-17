@@ -1,5 +1,6 @@
 import ready from '../ready';
 import { CommonCallback } from '../utils';
+import { GLOBAL_NAME } from '../constants';
 
 // 调用NA的UI
 const ui = {
@@ -12,7 +13,7 @@ const ui = {
                 let params = {
                     show: 1
                 };
-                window.WMApp.kernel.invoke('loading', params, (data) => CommonCallback(resolve, reject, data));
+                window[GLOBAL_NAME].kernel.invoke('loading', params, (data) => CommonCallback(resolve, reject, data));
             })
         })
     },
@@ -25,7 +26,7 @@ const ui = {
                 let params = {
                     show: 0
                 };
-                window.WMApp.kernel.invoke('loading', params, (data) => CommonCallback(resolve, reject, data));
+                window[GLOBAL_NAME].kernel.invoke('loading', params, (data) => CommonCallback(resolve, reject, data));
             })
         })
     },
@@ -43,7 +44,7 @@ const ui = {
                     cancelBtnText: '取消',
                     confirmBtnText: '确认'
                 };
-                window.WMApp.kernel.invoke('dialog', params, (data) => CommonCallback(resolve, reject, data));
+                window[GLOBAL_NAME].kernel.invoke('dialog', params, (data) => CommonCallback(resolve, reject, data));
             });
         });
     },
@@ -59,7 +60,7 @@ const ui = {
                     text: text,
                     duration: duration 
                 }
-                window.WMApp.kernel.invoke('toast', params, (data) => CommonCallback(resolve, reject, data));
+                window[GLOBAL_NAME].kernel.invoke('toast', params, (data) => CommonCallback(resolve, reject, data));
             })
         });
     }

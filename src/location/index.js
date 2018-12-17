@@ -1,11 +1,12 @@
 import ready from '../ready';
 import { AsynHack, ResolveWrapper } from '../utils';
+import { GLOBAL_NAME } from '../constants';
 
 // 定位相关
 const location = {
   getRealTimeLocation() {
     return ready().then(function () {
-      let loc = window.WMApp.location.getSyncLocation();
+      let loc = window[GLOBAL_NAME].location.getSyncLocation();
       AsynHack();
 
       if (loc.lng && loc.lat) {
@@ -13,7 +14,7 @@ const location = {
       }
 
       return new Promise(function (resolve, reject) {
-          window.WMApp.location.getAsyncLocation(function (locAsync) {
+          window[GLOBAL_NAME].location.getAsyncLocation(function (locAsync) {
             ResolveWrapper(resolve, locAsync);
           });
       });

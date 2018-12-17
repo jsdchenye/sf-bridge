@@ -1,11 +1,12 @@
 import 'es6-promise/auto';
 import { ResolveWrapper, getPageData } from '../utils';
 import { TIME_OUT } from '../../config';
+import { READY_CHECK_EVENT } from '../constants';
 
 function ready() {
     return new Promise(function (resolve, reject) {
         setTimeout(reject, TIME_OUT, 'AppReady timeout');
-        if (window.AppReady) {
+        if (window[READY_CHECK_EVENT]) {
             ResolveWrapper(resolve);
         }
         else {
@@ -15,10 +16,10 @@ function ready() {
                 if (data.pageData) {
                     objectAssign(pageData, data.pageData);
                 }
-                document.removeEventListener('AppReady', AppReady);
+                document.removeEventListener(READY_CHECK_EVENT, AppReady);
                 ResolveWrapper(resolve, pageData);
             };
-            document.addEventListener('AppReady', AppReady);
+            document.addEventListener(READY_CHECK_EVENT, AppReady);
         }
     });
 }

@@ -11,7 +11,6 @@ import { testAgent } from './utils';
 
 // 此处可做适配，通过navigator.userAgent适配不同的环境
 let isWeixin = testAgent('micromessenger');
-let isBdwm = testAgent('wmapp');
 
 const bridge = {
     account, 

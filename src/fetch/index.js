@@ -1,6 +1,7 @@
 import ready from '../ready';
-import { isIOS, mergeUrl, ResolveWrapper, RejectWrapper } from '../utils';
+import { ResolveWrapper, RejectWrapper } from '../utils';
 import { online, boundary } from '../../config';
+import { GLOBAL_NAME } from '../constants';
 
 const fetchSubstitute = {
   fetch(data) {
@@ -15,7 +16,7 @@ const fetchSubstitute = {
   sendRequest(params) {
       return ready().then(function() {
           return new Promise(function(resolve, reject) {
-              WMApp.kernel.invoke('sendRequest', params, function (data) {
+              window[GLOBAL_NAME].kernel.invoke('sendRequest', params, function (data) {
                   if (data.status && data.result && parseInt(data.result.statusCode, 10) === 200) {
                       let r = decodeURIComponent(data.result.responseBody);
                       if (r.indexOf(boundary) === 0) {

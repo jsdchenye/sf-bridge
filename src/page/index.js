@@ -1,5 +1,6 @@
 import ready from '../ready';
 import { AsynHack } from '../utils';
+import { PROTOCOL_NAME, GLOBAL_NAME } from '../constants';
 
 // 跳转到不同的NA页面
 const page = {
@@ -7,7 +8,7 @@ const page = {
      * 关闭WebView
      */
     close() {
-        return ready().then(window.WMApp.page.closePage);
+        return ready().then(window[GLOBAL_NAME].page.closePage);
     },
     /**
      * 打开WebView
@@ -15,16 +16,16 @@ const page = {
      * @param {*} onBack 
      */
     open(url, onBack) {
-        if (url.indexOf('bdwm://') !== 0) {
+        if (url.indexOf(`${PROTOCOL_NAME}://`) !== 0) {
             // header=1 是白色头部，注意兼容
             let header = 1;
-            url = 'bdwm://native?pageName=webview&url=' + encodeURIComponent(url) + '&header=' + header;
+            url = `${PROTOCOL_NAME}://native?pageName=webview&url=${encodeURIComponent(url)}&header=' + ${header}`;
         }
         window.location.href = url;
     },
     onBack(onBackHandler) {
         return ready().then(function () {
-            window.WMApp.entry.setPageAction('onBack', onBackHandler);
+            window[GLOBAL_NAME].entry.setPageAction('onBack', onBackHandler);
             AsynHack();
         });
     },
@@ -39,14 +40,14 @@ const page = {
                 pageParams.pageData = JSON.stringify(pageParams.pageData);
             }
 
-            window.WMApp.kernel.globalWebInvoke(params);
+            window[GLOBAL_NAME].kernel.globalWebInvoke(params);
         }else {
-            window.WMApp.kernel.globalAppInvoke(params);
+            window[GLOBAL_NAME].kernel.globalAppInvoke(params);
         }
     },
     changePageForResult: function (params, callback) {
         if (typeof callback === "function" && params && params.openUrl) {
-            window.WMApp.kernel.invoke('changePageForResult', params, callback);
+            window[GLOBAL_NAME].kernel.invoke('changePageForResult', params, callback);
         }else {
             console.log('callback is required');
         }

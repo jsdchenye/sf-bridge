@@ -1,13 +1,13 @@
 import ready from '../ready';
+import { GLOBAL_NAME } from '../constants';
 
 // 设备信息相关
 const device = {
     info() {
         return ready().then(function(){
-            let deviceInfo = window.WMApp.device.getDeviceInfo();
+            let deviceInfo = window[GLOBAL_NAME].device.getDeviceInfo();
             setTimeout(function () { }, 0);
             return {
-                client: 'bdwm',
                 cuid: deviceInfo.cuid,
                 sv: deviceInfo.sv,
                 channel: deviceInfo.channel,
@@ -24,7 +24,7 @@ const device = {
     takePhoto(callback) {
         return ready().then(function(){
             return new Promise(function (resolve, reject) {
-                window.WMApp.kernel.invoke('takePhoto', callback);
+                window[GLOBAL_NAME].kernel.invoke('takePhoto', callback);
             }) 
         })
     }
