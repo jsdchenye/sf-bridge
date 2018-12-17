@@ -1,6 +1,6 @@
 import ready from '../ready';
 import { AsynHack, ResolveWrapper } from '../utils';
-import { GLOBAL_NAME } from '../constants';
+import { GLOBAL_NAME } from '../../config';
 
 // 定位相关
 const location = {

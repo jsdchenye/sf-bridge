@@ -1,7 +1,6 @@
 import ready from '../ready';
 import { isIOS, mergeUrl, ResolveWrapper, RejectWrapper } from '../utils';
-import { online, boundary } from '../../config';
-import { GLOBAL_NAME } from '../constants';
+import { GLOBAL_NAME, online, boundary } from '../../config';
 
 const network = {
     /**

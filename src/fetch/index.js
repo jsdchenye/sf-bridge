@@ -1,7 +1,6 @@
 import ready from '../ready';
 import { ResolveWrapper, RejectWrapper } from '../utils';
-import { online, boundary } from '../../config';
-import { GLOBAL_NAME } from '../constants';
+import { boundary, GLOBAL_NAME } from '../../config';
 
 const fetchSubstitute = {
   fetch(data) {

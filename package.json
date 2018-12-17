@@ -6,11 +6,24 @@
   },
   "description": "bridge",
   "dependencies": {
-    "rimraf": "^2.6.1"
+    "@babel/core": "^7.2.2",
+    "babel-loader": "^8.0.4",
+    "copy-webpack-plugin": "^4.6.0",
+    "eden-remote-deploy": "0.0.5",
+    "eslint": "^5.10.0",
+    "eslint-plugin-import": "^2.14.0",
+    "eslint-plugin-jsx-a11y": "^6.1.2",
+    "express": "^4.16.4",
+    "html-webpack-plugin": "^3.2.0",
+    "path": "^0.12.7",
+    "rimraf": "^2.6.1",
+    "webpack": "^4.27.1",
+    "webpack-dev-middleware": "^3.4.0",
+    "webpack-hot-middleware": "^2.24.3"
   },
   "devDependencies": {
+    "webpack-cli": "^3.1.2",
     "babel-cli": "^6.3.17",
-    "babel-core": "^6.3.26",
     "babel-eslint": "^5.0.0-beta9",
     "babel-loader": "^6.2.0",
     "babel-plugin-transform-decorators-legacy": "^1.2.0",
@@ -23,11 +36,14 @@
   "license": "MIT",
   "main": "index.js",
   "scripts": {
+    "start": "node scripts/start.js",
+    "build-demo": "webpack --config scripts/webpack.prod.config.js --color -p --progress --hide-modules --display-optimization-bailout",
     "build": "babel src --out-dir lib",
     "clean": "rimraf lib dist coverage",
     "lint": "eslint src test",
     "test": "mocha --compilers js:babel-core/register --recursive --require ./test/setup.js",
     "test:cov": "babel-node ./node_modules/isparta/bin/isparta cover ./node_modules/mocha/bin/_mocha -- --recursive --require ./test/setup.js",
-    "test:watch": "npm test -- --watch"
+    "test:watch": "npm test -- --watch",
+    "deploy": "node scripts/deploy.js"
   }
 }

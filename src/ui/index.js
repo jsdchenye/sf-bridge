@@ -1,6 +1,6 @@
 import ready from '../ready';
 import { CommonCallback } from '../utils';
-import { GLOBAL_NAME } from '../constants';
+import { GLOBAL_NAME } from '../../config';
 
 // 调用NA的UI
 const ui = {

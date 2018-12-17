@@ -4,41 +4,13 @@
     <meta charset="UTF-8">
     <meta name="viewport"
           content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
-    <title>WaiMai Bridge</title>
+    <title>Bridge Test</title>
+    <script src="/static/base.js"></script>
 </head>
 <body>
 
 <div class="container">
 
 </div>
-
-<script>
-    function test() {
-      return new Promise(function (resolve, reject) {
-          setTimeout(reject, 1000, 'WMAppReady timeout');
-          resolve({dd: 'dd'});
-          // if (window.WMApp && window.WMAppReady) {
-          //     resolve(pageData);
-          //     setTimeout(function () { }, 0);
-          // }
-          // else {
-          //     let WMAppReady = function (data) {
-          //         if (data.pageData) {
-          //             objectAssign(pageData, data.pageData);
-          //         }
-          //         document.removeEventListener('WMAppReady', WMAppReady);
-          //         resolve(pageData);
-          //         setTimeout(function () { }, 0);
-          //     };
-          //     document.addEventListener('WMAppReady', WMAppReady);
-          // }
-      });
-    }
-    test().then(function(data) {
-      console.log(data)
-    });
-
-</script>
-
 </body>
 </html>

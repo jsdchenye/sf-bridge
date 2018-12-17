@@ -1,6 +1,6 @@
 import ready from '../ready';
 import { CommonCallback, RejectWrapper, ResolveWrapper } from '../utils';
-import { GLOBAL_NAME } from '../constants';
+import { GLOBAL_NAME } from '../../config';
 
 const account = {
     login() {

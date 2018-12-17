@@ -1,5 +1,5 @@
 import ready from '../ready';
-import { GLOBAL_NAME } from '../constants';
+import { GLOBAL_NAME } from '../../config';
 
 // 设备信息相关
 const device = {

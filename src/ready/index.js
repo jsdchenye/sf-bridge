@@ -1,7 +1,6 @@
 import 'es6-promise/auto';
 import { ResolveWrapper, getPageData } from '../utils';
-import { TIME_OUT } from '../../config';
-import { READY_CHECK_EVENT } from '../constants';
+import { TIME_OUT, READY_CHECK_EVENT } from '../../config';
 
 function ready() {
     return new Promise(function (resolve, reject) {

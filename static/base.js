@@ -357,7 +357,7 @@ SFApp.define('core/listener.js', function(require, exports, module) {
                 listeners[name] = function(data) {
                     return callback.call(null, data ? JSON.parse(data) : '');
                 };
-            }else {
+            } else {
                 listeners[name] = function(data) {};
             }
         },
@@ -375,7 +375,7 @@ SFApp.define('bridge/jsBridge.js', function(require, exports, module) {
         util = require('core/util.js'),
         listeners = require('core/listener.js'),
         schemaCfg = {
-            scheme: 'bdsf',     // 默认协议为bdsf
+            scheme: 'sftc',
             webHost: 'websdk',
             nativeHost: 'native',
             pluginHost: 'plugin'

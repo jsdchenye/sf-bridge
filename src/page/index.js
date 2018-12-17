@@ -1,6 +1,6 @@
 import ready from '../ready';
 import { AsynHack } from '../utils';
-import { PROTOCOL_NAME, GLOBAL_NAME } from '../constants';
+import { SCHEME_NAME, GLOBAL_NAME } from '../../config';
 
 // 跳转到不同的NA页面
 const page = {
@@ -16,10 +16,10 @@ const page = {
      * @param {*} onBack 
      */
     open(url, onBack) {
-        if (url.indexOf(`${PROTOCOL_NAME}://`) !== 0) {
+        if (url.indexOf(`${SCHEME_NAME}://`) !== 0) {
             // header=1 是白色头部，注意兼容
             let header = 1;
-            url = `${PROTOCOL_NAME}://native?pageName=webview&url=${encodeURIComponent(url)}&header=' + ${header}`;
+            url = `${SCHEME_NAME}://native?pageName=webview&url=${encodeURIComponent(url)}&header=' + ${header}`;
         }
         window.location.href = url;
     },
