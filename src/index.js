@@ -1,26 +1,22 @@
-import account from './account';
+// import account from './account';
 import device from './device';
-import location from './location';
+// import location from './location';
 import network from './network';
-import page from './page';
+// import page from './page';
 import ready from './ready';
 import ui from './ui';
-import fetch from './fetch';
+// import fetch from './fetch';
 
-import { testAgent } from './utils';
+import { isApp } from './utils';
+import substitute from '../substitute';
 
-// 此处可做适配，通过navigator.userAgent适配不同的环境
-let isWeixin = testAgent('micromessenger');
-
-const bridge = {
-    account, 
-    device, 
-    location, 
-    network, 
-    page, 
+const appBridge =  {
     ready,
+    device, 
+    network, 
     ui,
-    fetch
 }
 
-export default bridge;
+const bridge = isApp() ? appBridge : substitute;
+
+export default appBridge;

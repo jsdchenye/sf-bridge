@@ -54,6 +54,20 @@ export const isIOS = () => {
     return /iPhone|iPad|iPod/i.test(navigator.userAgent);
 }
 
+/**
+ * 粗略判断
+ */
+export const isPC = () => {
+    return /Safari|Chrome|Mozilla/i.test(navigator.userAgent);
+}
+
+/**
+ * 判断是否是在App内部使用
+ */
+export const isApp = () => {
+    return false;
+}
+
 export const mergeUrl = (url, params) => {
     return url + (url.indexOf("?") > -1 ? "&": "?") + (params ? util.joinParams(params) : '');
 }

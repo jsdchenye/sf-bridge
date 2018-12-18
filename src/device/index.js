@@ -27,6 +27,14 @@ const device = {
                 window[GLOBAL_NAME].kernel.invoke('takePhoto', callback);
             }) 
         })
+    },
+
+    scanBarCode(callback) {
+        return ready().then(function() {
+            return new Promise(function(resolve, reject) {
+                window[GLOBAL_NAME].kernel.invoke('scanBarCode', callback);
+            })
+        })
     }
 }
 

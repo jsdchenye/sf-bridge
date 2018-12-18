@@ -3,6 +3,7 @@ const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 module.exports = {
+  mode: 'development',
   entry: {
     demo: path.join(process.cwd(), 'demo/index.js'),
   },
@@ -13,11 +14,6 @@ module.exports = {
   },
   target: 'web', // Make web variables accessible to webpack, e.g. window
   plugins: [
-    // 使用ProvidePlugin加载的模块在使用时将不再需要import和require进行引入
-    new webpack.ProvidePlugin({
-      // make fetch available
-      fetch: 'exports-loader?self.fetch!whatwg-fetch',
-    }),
     // Always expose NODE_ENV to webpack, in order to use `process.env.NODE_ENV`
     // inside your code for any environment checks; UglifyJS will automatically
     // drop any unreachable code.

@@ -1,4 +1,3 @@
-import 'es6-promise/auto';
 import { ResolveWrapper, getPageData } from '../utils';
 import { TIME_OUT, READY_CHECK_EVENT } from '../../config';
 
