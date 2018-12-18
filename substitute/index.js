@@ -13,11 +13,11 @@ const appBridge =  {
     takePhoto: successPromise,
     scanBarCode: successPromise,
   }, 
-  // network: {
-  //   get: getRequest,
-  //   post: postRequest,
-  //   sendRequest: (params) => request(params.url, params),
-  // },
+  network: {
+    get: getRequest,
+    post: postRequest,
+    sendRequest: (params) => request(params.url, params),
+  },
   ui: {
     startLoading: successPromise,
     endLoading: successPromise,

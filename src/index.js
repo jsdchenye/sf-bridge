@@ -19,4 +19,4 @@ const appBridge =  {
 
 const bridge = isApp() ? appBridge : substitute;
 
-export default appBridge;
+export default bridge;
