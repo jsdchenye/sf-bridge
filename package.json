@@ -45,7 +45,7 @@
   "main": "index.js",
   "scripts": {
     "start": "node scripts/start.js",
-    "build-demo": "webpack --config scripts/webpack.prod.config.js --color -p --progress --hide-modules --display-optimization-bailout",
+    "build-demo": "./node_modules/.bin/cross-env NODE_ENV=production webpack --config scripts/webpack.prod.config.js --color -p --progress --hide-modules --display-optimization-bailout",
     "deploy": "node scripts/deploy.js",
     "compress": "gulp -f scripts/compress.js"
   },
