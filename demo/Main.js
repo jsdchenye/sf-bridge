@@ -19,6 +19,7 @@ export default class Main extends React.PureComponent {
   render() {
     return (
       <div>
+        <div>17：16</div>
         <div>
           <button onClick={this.handleTestRequest}>测试发请求</button>
           <button onClick={this.handleTestTakePhoto}>测试调起相机</button>

@@ -1,5 +1,3 @@
-import objectAssign from 'object-assign';
-
 export const getPageData = () => {
     let search = window.location.search.replace(/^\?/, '');
     let params = {};
@@ -18,7 +16,11 @@ export const getPageData = () => {
         catch (e) {
             innerP = {};
         }
-        objectAssign(params, innerP);
+
+        params = {
+            ...params,
+            ...innerP,
+        }
     }
     return params;
 };

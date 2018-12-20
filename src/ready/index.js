@@ -12,9 +12,13 @@ function ready() {
                 let pageData = getPageData();
 
                 if (data.pageData) {
-                    objectAssign(pageData, data.pageData);
+                    pageData = {
+                        ...pageData,
+                        ...data.pageData,
+                    }
                 }
                 document.removeEventListener(READY_CHECK_EVENT, AppReady);
+                window[READY_CHECK_EVENT] = true;
                 ResolveWrapper(resolve, pageData);
             };
             document.addEventListener(READY_CHECK_EVENT, AppReady);
