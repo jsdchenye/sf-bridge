@@ -1,5 +1,6 @@
 import ready from '../ready';
 import { GLOBAL_NAME } from '../../config';
+import { CommonCallback, RejectWrapper, ResolveWrapper } from '../utils';
 
 // 设备信息相关
 const device = {
@@ -21,18 +22,26 @@ const device = {
         })
     },
 
-    takePhoto(callback) {
+    takePhoto() {
         return ready().then(function(){
             return new Promise(function (resolve, reject) {
-                window[GLOBAL_NAME].kernel.invoke('takePhoto', callback);
+                window[GLOBAL_NAME].kernel.invoke('takePhoto', (data) => {
+                    if (data) {
+                        ResolveWrapper(resolve, data);
+                    } else {
+                        RejectWrapper(reject);
+                    }
+                });
             }) 
         })
     },
 
-    scanBarCode(callback) {
+    scanBarCode() {
         return ready().then(function() {
             return new Promise(function(resolve, reject) {
-                window[GLOBAL_NAME].kernel.invoke('scanBarCode', callback);
+                window[GLOBAL_NAME].kernel.invoke('scanBarCode', (data) => {
+                    CommonCallback(resolve, reject, data);
+                });
             })
         })
     }

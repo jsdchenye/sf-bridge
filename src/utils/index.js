@@ -29,7 +29,7 @@ export const ResolveWrapper = (resolve, data) => {
 }
 
 export const RejectWrapper = (reject, data) => {
-    reject(data || getPageData());
+    reject(data);
     AsynHack();
 }
 
@@ -65,7 +65,7 @@ export const isPC = () => {
  * 判断是否是在App内部使用
  */
 export const isApp = () => {
-    return false;
+    return true;
 }
 
 export const mergeUrl = (url, params) => {
