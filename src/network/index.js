@@ -21,8 +21,7 @@ const network = {
                 type: 'GET',
                 url: mergeUrl(online + url, params)
             };
-
-            return this.sendRequest(params);
+            return network.sendRequest(params);
         }
     )},
     /**
@@ -45,7 +44,7 @@ const network = {
                 rawData: query.join('&')
             };
 
-            return this.sendRequest(params);
+            return network.sendRequest(params);
         })
     },
     /**
