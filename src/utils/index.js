@@ -70,6 +70,14 @@ export const isApp = () => {
     return true;
 }
 
+export const joinParams = (params) => {
+    if (params) {
+        const arr = Object.keys(params).map(item => `${item}=${params[item]}`);
+        return arr.join('&');
+    }
+    return '';
+}
+
 export const mergeUrl = (url, params) => {
-    return url + (url.indexOf("?") > -1 ? "&": "?") + (params ? util.joinParams(params) : '');
+    return url + (url.indexOf("?") > -1 ? "&": "?") + (params ? joinParams(params) : '');
 }

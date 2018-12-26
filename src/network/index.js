@@ -8,18 +8,18 @@ const network = {
      * @param {*} url 为相对路径即可，手动拼接为online+url
      * @param {*} params 
      */
-    get(url, params) {
+    get(url, userParams) {
         return ready().then(() => {
             if (isIOS) {
-                for (let key in params) {
-                    if (params.hasOwnProperty(key)) {
-                        params[key] = encodeURIComponent(params[key]);
+                for (let key in userParams) {
+                    if (userParams.hasOwnProperty(key)) {
+                        userParams[key] = encodeURIComponent(userParams[key]);
                     }
                 }
             }
             let params = {
                 type: 'GET',
-                url: mergeUrl(online + url, params)
+                url: mergeUrl(online + url, userParams)
             };
             return network.sendRequest(params);
         }
@@ -55,6 +55,8 @@ const network = {
         return ready().then(function() {
             return new Promise(function(resolve, reject) {
                 window[GLOBAL_NAME].kernel.invoke('sendRequest', params, function (data) {
+                    alert(data);
+                    window.console.log('-------', data);
                     if (data.status && data.result && parseInt(data.result.statusCode, 10) === 200) {
                         let r = decodeURIComponent(data.result.responseBody);
                         if (r.indexOf(boundary) === 0) {

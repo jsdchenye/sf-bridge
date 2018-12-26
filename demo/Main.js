@@ -1,13 +1,20 @@
 import React from 'react';
 import bridge from '../src';
 
-const { get } = bridge.network;
+const { get, post } = bridge.network;
 const { takePhoto, scanBarCode } = bridge.device;
 
 export default class Main extends React.PureComponent {
   handleTestRequest() {
-    const getService = (params) => get('/wms/basic/getcommonlist', params);
-    getService({ name: 'lichun' });
+    const getService = (params) => get('https://www.baidu.com', params);
+    getService({ name: 'lichun', chinese: '李淳' }).then((data) => {
+      console.log(data);
+    });
+  }
+
+  handleTestPostRequest() {
+    const postService = (params) => post('https://www.baidu.com', params);
+    postService({ testName: 'postService', name: 'lichun' });
   }
 
   handleTestTakePhoto() {
@@ -19,9 +26,9 @@ export default class Main extends React.PureComponent {
   render() {
     return (
       <div>
-        <div>17：16</div>
         <div>
-          <button onClick={this.handleTestRequest}>测试发请求</button>
+          <button onClick={this.handleTestRequest}>测试发get请求</button>
+          <button onClick={this.handleTestRequest}>测试发post请求</button>
           <button onClick={this.handleTestTakePhoto}>测试调起相机</button>
         </div>
       </div>
