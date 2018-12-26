@@ -1,12 +1,14 @@
 import React from 'react';
 import bridge from '../src';
 
-const { get, post } = bridge.network;
+const { get, post, setHost } = bridge.network;
 const { takePhoto, scanBarCode } = bridge.device;
+
+setHost('https://');
 
 export default class Main extends React.PureComponent {
   handleTestRequest() {
-    const getService = (params) => get('https://www.baidu.com', params);
+    const getService = (params) => get('www.baidu.com', params);
     getService({ name: 'lichun', chinese: '李淳' }).then((data) => {
       console.log(data);
     });

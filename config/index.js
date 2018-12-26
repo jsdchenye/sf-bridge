@@ -8,6 +8,8 @@ export const CACHE_DATA = 'SFAppData';
 
 export const BRIDER = 'SFAppBridge';
 
+export const APP_FLAG = 'SFHybrid';
+
 // 超时配置
 export const TIME_OUT = 10000;
 

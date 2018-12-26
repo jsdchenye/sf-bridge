@@ -1,3 +1,5 @@
+import { APP_FLAG } from '../../config';
+
 export const getPageData = () => {
     let search = window.location.search.replace(/^\?/, '');
     let params = {};
@@ -67,7 +69,10 @@ export const isPC = () => {
  * 判断是否是在App内部使用
  */
 export const isApp = () => {
-    return true;
+    if (navigator.userAgent.indexOf(APP_FLAG) > -1) {
+        return true;
+    }
+    return false;
 }
 
 export const joinParams = (params) => {
