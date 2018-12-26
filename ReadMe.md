@@ -9,3 +9,7 @@
 3. 扫条形码
 
 4. Loading
+
+## 注意事项
+
+1. 先行调用network.setHost()设置请求host；

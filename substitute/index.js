@@ -14,6 +14,7 @@ const appBridge =  {
     scanBarCode: successPromise,
   }, 
   network: {
+    setHost: () => {},
     get: getRequest,
     post: postRequest,
     sendRequest: (params) => request(params.url, params),

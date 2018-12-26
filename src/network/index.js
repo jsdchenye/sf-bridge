@@ -1,8 +1,11 @@
 import ready from '../ready';
 import { isIOS, mergeUrl, ResolveWrapper, RejectWrapper } from '../utils';
-import { GLOBAL_NAME, online, boundary } from '../../config';
+import { GLOBAL_NAME, boundary } from '../../config';
 
 const network = {
+    setHost(host) {
+        window.__NA_BRIDGE_HOST__ = host;
+    },
     /**
      * NA代理发送get请求
      * @param {*} url 为相对路径即可，手动拼接为online+url
@@ -19,27 +22,27 @@ const network = {
             }
             let params = {
                 type: 'GET',
-                url: mergeUrl(online + url, userParams)
+                url: mergeUrl( window.__NA_BRIDGE_HOST__ + url, userParams)
             };
             return network.sendRequest(params);
         }
     )},
     /**
-     * NA代理发送get请求
+     * NA代理发送post请求
      * @param {*} url 为相对路径即可，手动拼接为online+url
      * @param {*} params 
      */
-    post(url, params) {
+    post(url, userParams) {
         return ready().then(() => {
             let query = [];
-            for (let key in params) {
-                if (params.hasOwnProperty(key)) {
+            for (let key in userParams) {
+                if (userParams.hasOwnProperty(key)) {
                     query.push(key + '=' + encodeURIComponent(data[key]));
                 }
             }
             let params = {
                 type: 'POST',
-                url: online + url,
+                url: window.__NA_BRIDGE_HOST__ + url,
                 contentType: 'application/x-www-form-urlencoded',
                 rawData: query.join('&')
             };
@@ -55,8 +58,6 @@ const network = {
         return ready().then(function() {
             return new Promise(function(resolve, reject) {
                 window[GLOBAL_NAME].kernel.invoke('sendRequest', params, function (data) {
-                    alert(data);
-                    window.console.log('-------', data);
                     if (data.status && data.result && parseInt(data.result.statusCode, 10) === 200) {
                         let r = decodeURIComponent(data.result.responseBody);
                         if (r.indexOf(boundary) === 0) {
