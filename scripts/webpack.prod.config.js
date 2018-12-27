@@ -9,7 +9,7 @@ module.exports = {
   },
   output: {
     filename: 'bundle.js',
-    path: path.resolve(process.cwd(), 'dist'),
+    path: path.resolve(process.cwd(), 'demo-dist'),
     publicPath: '/static/',
   },
   target: 'web', // Make web variables accessible to webpack, e.g. window
@@ -35,7 +35,7 @@ module.exports = {
     new CopyWebpackPlugin([
       {
         from: path.resolve(process.cwd(), 'static'),
-        to: path.resolve(process.cwd(), 'dist'),
+        to: path.resolve(process.cwd(), 'demo-dist'),
       },
     ]),
   ],

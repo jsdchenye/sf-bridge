@@ -5,5 +5,5 @@ const path = require('path');
 gulp.task('default', function() {
   return gulp.src(path.resolve(__dirname, '../static/base.js'))
     .pipe(uglify({ mangle: false }))
-    .pipe(gulp.dest(path.resolve(__dirname, '../dist')));
+    .pipe(gulp.dest(path.resolve(__dirname, '../demo-dist')));
 });

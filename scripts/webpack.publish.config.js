@@ -1,31 +1,23 @@
 const path = require('path');
 const webpack = require('webpack');
-const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 module.exports = {
-  mode: 'development',
   entry: {
-    demo: path.join(process.cwd(), 'demo/index.js'),
+    index: path.join(process.cwd(), 'src/index.js'),
   },
   output: {
-    filename: 'bundle.js',
-    path: path.resolve(process.cwd(), 'demo-dist'),
-    publicPath: '/',
+    filename: 'index.js',
+    path: path.resolve(process.cwd(), 'dist'),
+    libraryTarget: 'umd',
+    library: 'sf-bridge',
+    libraryExport: 'default',
   },
   target: 'web', // Make web variables accessible to webpack, e.g. window
   plugins: [
-    // Always expose NODE_ENV to webpack, in order to use `process.env.NODE_ENV`
-    // inside your code for any environment checks; UglifyJS will automatically
-    // drop any unreachable code.
     new webpack.DefinePlugin({
       'process.env': {
-        NODE_ENV: JSON.stringify(process.env.NODE_ENV),
+        NODE_ENV: 'production',
       },
-    }),
-    new HtmlWebpackPlugin({
-      inject: true,
-      filename: 'index.html',
-      template: path.resolve(process.cwd(), 'demo', 'index.html'),
     }),
   ],
   module: {

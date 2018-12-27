@@ -20,7 +20,7 @@ const deployCfg = {
 };
 
 const edenCfg = [{
-  from: 'dist/**',
+  from: 'demo-dist/**',
   to: 'webroot/static/',
 }];
 
