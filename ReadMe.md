@@ -14,6 +14,8 @@
 
 4. 环境检查；
 
+持续更新ing
+
 ## 使用指南
 
 ```javascript
@@ -29,15 +31,15 @@ const isInApp = bridge.utils.isInApp();
 ```
 
 ```javascript
-# NA代发请求
+// NA代发请求
 import bridge from 'sf-bridge';
 
 const { get, post, setHost} = bridge.network;
 
-# 设置host 仅需设置一次，且必须设置；
+// 设置host 仅需设置一次，且必须设置；
 setHost('http://gz-loc-development00.gz.sftcwl.com:9949');
 
-# 发送请求 Promise，url为/appname/getsth
+// 发送请求 Promise，url为/appname/getsth
 get(url, params).then(response => {
   // do sth
 });
@@ -60,4 +62,5 @@ scanCode().then((data) => {
 
 ## 注意事项
 
-1. 代发请求需要先行调用network.setHost()设置请求host；
+1. 需要端上提前注入static/base.js；
+2. 代发请求需要先行调用network.setHost()设置请求host；
