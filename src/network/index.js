@@ -64,7 +64,12 @@ const network = {
                             r = r.split(boundary)[1]
                         }
                         console.info('response', r)
-                        ResolveWrapper(resolve, r)
+                        try {
+                            const responseJson = JSON.parse(r);
+                            ResolveWrapper(resolve, responseJson);
+                        } catch (error) {
+                            ResolveWrapper(resolve, r);
+                        }
                     } else {
                         let info = '数据传输失败，请重试'
                         console.info(info);

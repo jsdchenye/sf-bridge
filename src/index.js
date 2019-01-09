@@ -19,6 +19,10 @@ const appBridge =  {
 
 const bridge = isApp() ? appBridge : substitute;
 
+bridge.utils = {
+    isInApp: isApp,
+}
+
 bridge.ready();
 
 export default bridge;

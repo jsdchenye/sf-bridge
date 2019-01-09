@@ -11,7 +11,7 @@ const appBridge =  {
   device: {
     info: successPromise,
     takePhoto: successPromise,
-    scanBarCode: successPromise,
+    scanCode: successPromise,
   }, 
   network: {
     setHost: () => {},

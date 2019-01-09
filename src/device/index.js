@@ -36,10 +36,10 @@ const device = {
         })
     },
 
-    scanBarCode() {
+    scanCode() {
         return ready().then(function() {
             return new Promise(function(resolve, reject) {
-                window[GLOBAL_NAME].kernel.invoke('scanBarCode', (data) => {
+                window[GLOBAL_NAME].kernel.invoke('scanCode', (data) => {
                     CommonCallback(resolve, reject, data);
                 });
             })
