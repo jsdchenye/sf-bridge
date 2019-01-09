@@ -37,16 +37,15 @@ const network = {
             let query = [];
             for (let key in userParams) {
                 if (userParams.hasOwnProperty(key)) {
-                    query.push(key + '=' + encodeURIComponent(data[key]));
+                    query.push(key + '=' + encodeURIComponent(userParams[key]));
                 }
             }
             let params = {
                 type: 'POST',
                 url: window.__NA_BRIDGE_HOST__ + url,
                 contentType: 'application/x-www-form-urlencoded',
-                rawData: query.join('&')
+                httpBody: query.join('&')
             };
-
             return network.sendRequest(params);
         })
     },
@@ -58,6 +57,7 @@ const network = {
         return ready().then(function() {
             return new Promise(function(resolve, reject) {
                 window[GLOBAL_NAME].kernel.invoke('sendRequest', params, function (data) {
+                    console.log(data);
                     if (data.status && data.result && parseInt(data.result.statusCode, 10) === 200) {
                         let r = decodeURIComponent(data.result.responseBody);
                         if (r.indexOf(boundary) === 0) {

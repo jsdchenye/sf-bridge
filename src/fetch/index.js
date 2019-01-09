@@ -8,7 +8,7 @@ const fetchSubstitute = {
         type: data.method,
         url: data.url,
         header: data.headers,
-        rawData: data.body
+        httpBody: data.body
     };
     return this.sendRequest(params);
   },
