@@ -34,17 +34,28 @@ const isInApp = bridge.utils.isInApp();
 // NA代发请求
 import bridge from 'sf-bridge';
 
-const { get, post, setHost} = bridge.network;
+const { get, post, setHost, sendRequest } = bridge.network;
 
-// 设置host 仅需设置一次，且必须设置；
+// 设置host 仅需设置一次，且必须设置，若需要跨多个域取数据则设置为'', 而后请求使用完整路径；
 setHost('http://gz-loc-development00.gz.sftcwl.com:9949');
 
 // 发送请求 Promise，url为/appname/getsth
-get(url, params).then(response => {
+get(url, params, headers).then(response => {
   // do sth
 });
 
-post(url, params).then(response => {
+post(url, params, headers).then(response => {
+  // do sth
+});
+
+// 直接使用未封装方法与NA交互可配置数据如下
+// data = {
+//   url: Fullurl,
+//   contentType: 'application/x-www-form-urlencoded',
+//   httpBody: query.join('&'),
+//   headers: {...}
+// }
+sendRequest(data).then(response => {
   // do sth
 });
 ```

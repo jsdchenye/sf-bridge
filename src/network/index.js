@@ -9,9 +9,10 @@ const network = {
     /**
      * NA代理发送get请求
      * @param {*} url 为相对路径即可，手动拼接为online+url
-     * @param {*} params 
+     * @param {*} params  可选
+     * @param {*} headers 可选 
      */
-    get(url, userParams) {
+    get(url, userParams, headers) {
         return ready().then(() => {
             if (isIOS) {
                 for (let key in userParams) {
@@ -24,15 +25,20 @@ const network = {
                 type: 'GET',
                 url: mergeUrl( window.__NA_BRIDGE_HOST__ + url, userParams)
             };
+
+            if (headers) {
+                params.headers = headers;
+            }
             return network.sendRequest(params);
         }
     )},
     /**
      * NA代理发送post请求
      * @param {*} url 为相对路径即可，手动拼接为online+url
-     * @param {*} params 
+     * @param {*} params  可选
+     * @param {*} headers 可选 
      */
-    post(url, userParams) {
+    post(url, userParams, headers) {
         return ready().then(() => {
             let query = [];
             for (let key in userParams) {
@@ -46,6 +52,10 @@ const network = {
                 contentType: 'application/x-www-form-urlencoded',
                 httpBody: query.join('&')
             };
+
+            if (headers) {
+                params.headers = headers;
+            }
             return network.sendRequest(params);
         })
     },
