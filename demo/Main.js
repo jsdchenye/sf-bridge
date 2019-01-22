@@ -8,7 +8,7 @@ setHost('http://gz-loc-development00.gz.sftcwl.com:7300/mock/5c21fc70a9b82994f6c
 
 export default class Main extends React.PureComponent {
   handleTestRequest() {
-    const getService = (params) => get('www.baidu.com', params);
+    const getService = (params) => get('/management/pcs/v100/getuserinfo', params);
     getService({ name: 'lichun', chinese: '李淳' }).then((data) => {
       console.log(data);
     });
@@ -16,7 +16,7 @@ export default class Main extends React.PureComponent {
 
   handleTestPostRequest() {
     const postService = (params) => post('/management/pcs/v100/modifyorder', params);
-    postService({ testName: 'postService', name: 'lichun' }).then((data) => {
+    postService({ testName: 'postService', name: 'lichun', data: { success: true } }).then((data) => {
       console.log(data);
     });
   }

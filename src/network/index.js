@@ -14,7 +14,7 @@ const network = {
      */
     get(url, userParams, headers) {
         return ready().then(() => {
-            if (isIOS) {
+            if (isIOS()) {
                 for (let key in userParams) {
                     if (userParams.hasOwnProperty(key)) {
                         userParams[key] = encodeURIComponent(userParams[key]);
