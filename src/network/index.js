@@ -69,7 +69,9 @@ const network = {
                 window[GLOBAL_NAME].kernel.invoke('sendRequest', params, function (data) {
                     console.log(data);
                     if (data.status && data.result && parseInt(data.result.statusCode, 10) === 200) {
-                        let r = decodeURIComponent(data.result.responseBody);
+                        // 由于端上未进行encode操作，此处做出对应的修改；
+                        // let r = decodeURIComponent(data.result.responseBody);
+                        let r = data.result.responseBody;
                         if (r.indexOf(boundary) === 0) {
                             r = r.split(boundary)[1]
                         }
