@@ -18,11 +18,11 @@ export const getPageData = () => {
         catch (e) {
             innerP = {};
         }
-
-        params = {
-            ...params,
-            ...innerP,
-        }
+        params = Object.assign({}, params, innerP);
+        // params = {
+        //     ...params,
+        //     ...innerP,
+        // }
     }
     return params;
 };

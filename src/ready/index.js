@@ -12,10 +12,11 @@ function ready() {
                 let pageData = getPageData();
 
                 if (data.pageData) {
-                    pageData = {
-                        ...pageData,
-                        ...data.pageData,
-                    }
+                    pageData = Object.assign({}, pageData, data.pageData);
+                    // pageData = {
+                    //     ...pageData,
+                    //     ...data.pageData,
+                    // }
                 }
                 document.removeEventListener(READY_CHECK_EVENT, AppReady);
                 window[READY_CHECK_EVENT] = true;
