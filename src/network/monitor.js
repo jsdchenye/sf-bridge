@@ -34,7 +34,7 @@ function ajax(url, params) {
   const request = new XMLHttpRequest();
   request.open('POST', url, true);
   request.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-  request.send(`business_type=1&warning_msg=${JSON.stringify(params)}`)
+  request.send(`business_type=1&warning_msg=${JSON.stringify(params)}`);
 }
 
 /**
@@ -149,7 +149,7 @@ function monitor(params, data) {
       }
     } else if (params.url === apis.eleList) { // 列表
       const text = '饿了么订单列表接口';
-      const needParams = ['consigneeAddress', 'activeTime', 'consigneeSecretPhones', 'consigneeName', 'payAmount'];
+      const needParams = ['consigneeAddress1', 'activeTime', 'consigneeSecretPhones', 'consigneeName', 'payAmount'];
       isNetworkOk(data, errObj, text, 'result');
       // 网络请求没报错，判断接口返回数据结构
       if (!errObj.errmsg) {
@@ -217,23 +217,17 @@ function monitor(params, data) {
       const text = +typeObj.type === 1 ? '饿百用户名登录接口' : '饿百手机验证登录接口';
       isNetworkOk(data, errObj, text, 'data');
       if (!errObj.errmsg) {
-        const _header = JSON.parse(data.result.responseHeaders);
         const res = _response_body.data;
-        const cookieArr = (_header['Set-Cookie'] || _header['set-cookie'] || '').split(';');
-        const cookieMap = {}
-        cookieArr.forEach(function(v) {
-            const temp = v.split('=');
-            if (temp[0] && temp[1]) {
-                cookieMap[temp[0]] = temp[1]
-            }
-        });
-        if (+_response_body.errno !== 0) {
+        const errno = +_response_body.errno;
+        if (errno === 1001 || errno === 3003) { // 用户名、密码、验证码错误
+          return;
+        } else if (errno !== 0) {
           errObj.errmsg = `${text}报错`;
         } else if (isEmpty(res)) {
           errObj.errmsg = `${text}返回的结果中字段<data>有问题`;
         } else if (isEmpty(res.WMSTOKEN)) {
           errObj.errmsg = `${text}返回的结果中字段<WMSTOKEN>有问题`;
-        } else if (isEmpty(cookieMap.WMUSS)) {
+        } else if (isEmpty(res.WMUSS)) {
           errObj.errmsg = `${text}返回的结果中字段<WMUSS>有问题`;
         }
       }
@@ -299,11 +293,11 @@ function monitor(params, data) {
       }
     }
     if (errObj.errmsg) {
-      // ajax('http://10.59.57.146:8800/crm/common/uploadwarning', errObj);
+      // ajax('http://10.188.60.222:8095/crm/common/uploadwarning', errObj);
       ajax('http://shopic.sf-express.com/crm/common/uploadwarning', errObj);
     }
   } catch (error) {
-    // console.error(error, '这是一条错误信息');
+    console.error(error, '这是一条错误信息');
   }
 }
 
