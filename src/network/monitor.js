@@ -85,6 +85,27 @@ function isNetworkOk(data, errObj, api, flag) {
   }
 }
 /**
+ * 简介：精简上传的参数
+ * 
+ * @param {any} params 
+ * @param {any} data 
+ */
+function filterParam (params, data) {
+  const filterParams = {
+    url: params.url,
+    httpBody: params.httpBody,
+    headers: params.headers,
+  };
+  const filterData = {
+    status: data.status || '-',
+    result: {
+      statusCode: data.result && data.result.statusCode || '-',
+      responseBody: data.result && JSON.parse(data.result.responseBody) || {},
+    },
+  };
+  return ({ params: filterParams, detail: filterData });
+}
+/**
  * 简介：监控饿了么&&饿百接口中服务器请求&&返回数据字段
  * 
  * @param {any} params 
@@ -92,14 +113,14 @@ function isNetworkOk(data, errObj, api, flag) {
  */
 function monitor(params, data) {
   try {
-    const errObj = { params: params, detail: data };
+    const errObj = filterParam(params, data);
     const _response_body = JSON.parse(data.result.responseBody);
     /* ---- 饿了么相关 --- */
     if (params.url === apis.eleUsername) { // 登录 - 用户名
       const text = '饿了么用户名登录接口';
       isNetworkOk(data, errObj, text, 'result');
+      const res = _response_body.result;
       if (!errObj.errmsg) {
-        const res = _response_body.result;
         if (_response_body.error) {
           errObj.errmsg = `${text}报错`;
         } else if (isEmpty(res)) {
@@ -117,6 +138,10 @@ function monitor(params, data) {
         } else if (isEmpty(res.successData.ksid)) {
           errObj.errmsg = `${text}返回的结果中字段<ksid>有问题`;
         }
+      }
+      //  如果有报错(干掉上报的 permissions)
+      if (errObj.errmsg && res && res.successData) {
+        delete errObj.detail.result.responseBody.result.successData.permissions;
       }
     } else if (params.url === apis.eleVerifyCode) {  // 登录 - 获取验证码
       const text = '获取饿了么手机验证码接口';
@@ -127,8 +152,8 @@ function monitor(params, data) {
     } else if (params.url === apis.eleMobile) { // 登录 - 手机验证码登录
       const text = '饿了么手机验证码登录接口';
       isNetworkOk(data, errObj, text, 'result');
+      const res = _response_body.result;
       if (!errObj.errmsg) {
-        const res = _response_body.result;
         if (_response_body.error) {
           errObj.errmsg = `${text}报错`;
         } else if (isEmpty(res)) {
@@ -147,9 +172,14 @@ function monitor(params, data) {
           errObj.errmsg = `${text}返回的结果中字段<ksid>有问题`;
         }
       }
+
+      //  如果有报错(干掉上报的 permissions)
+      if (errObj.errmsg && res && res.successData) {
+        delete errObj.detail.result.responseBody.result.successData.permissions;
+      }
     } else if (params.url === apis.eleList) { // 列表
       const text = '饿了么订单列表接口';
-      const needParams = ['consigneeAddress1', 'activeTime', 'consigneeSecretPhones', 'consigneeName', 'payAmount'];
+      const needParams = ['consigneeAddress', 'activeTime', 'consigneeSecretPhones', 'consigneeName', 'payAmount'];
       isNetworkOk(data, errObj, text, 'result');
       // 网络请求没报错，判断接口返回数据结构
       if (!errObj.errmsg) {
@@ -171,6 +201,17 @@ function monitor(params, data) {
             errObj.errmsg = `${text}返回的列表中字段<${targetKey}>有问题`;
           }
         }
+      }
+
+      // 如果有报错(干掉上报的多余字段)
+      if (errObj.errmsg && _response_body.result && Array.isArray(_response_body.result)) {
+        errObj.detail.result.responseBody.result = _response_body.result.map(item => ({
+          [needParams[0]]: item[needParams[0]],
+          [needParams[1]]: item[needParams[1]],
+          [needParams[2]]: item[needParams[2]],
+          [needParams[3]]: item[needParams[3]],
+          [needParams[4]]: item[needParams[4]],
+        }));
       }
     } else if (params.url === apis.eleGeo) { // 经纬度
       const text = '饿了么经纬度接口';
@@ -271,6 +312,20 @@ function monitor(params, data) {
             }
           }
         }
+      }
+
+      // 如果有报错(干掉上报的多余字段)
+      if (errObj.errmsg && _response_body.data && _response_body.data.order_list
+          && Array.isArray(_response_body.data.order_list)) {
+        errObj.detail.result.responseBody.data.order_list = _response_body.data.order_list.map(item => ({
+          [needParams[0]]: item[needParams[0]],
+          [needParams[1]]: item[needParams[1]],
+          [needParams[2]]: item[needParams[2]],
+          [needParams[3]]: item[needParams[3]],
+          [needParams[4]]: item[needParams[4]],
+          [needParams[5]]: item[needParams[5]],
+          [needParams[6]]: item[needParams[6]],
+        }));
       }
     } else if (params.url === apis.ebGeo) { // 经纬度
       const text = '饿百经纬度接口';
