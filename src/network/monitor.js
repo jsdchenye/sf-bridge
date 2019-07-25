@@ -179,7 +179,8 @@ function monitor(params, data) {
       }
     } else if (params.url === apis.eleList) { // 列表
       const text = '饿了么订单列表接口';
-      const needParams = ['consigneeAddress', 'activeTime', 'consigneeSecretPhones', 'consigneeName', 'payAmount'];
+      const specialParams = ['consigneeAddress', 'consigneeAddressImage'];
+      const needParams = ['activeTime', 'consigneeSecretPhones', 'consigneeName', 'payAmount'];
       isNetworkOk(data, errObj, text, 'result');
       // 网络请求没报错，判断接口返回数据结构
       if (!errObj.errmsg) {
@@ -192,15 +193,19 @@ function monitor(params, data) {
           const temp = _response_body.result.orders;
           if (isEmpty(temp)) return;
           const res = temp && temp[0] || {};
-          const flag = needParams.every(function(ele) {
-            if (isEmpty(res[ele])) {
-              targetKey = ele;
-              return false;
+          if (isEmpty(res['consigneeAddress']) && isEmpty(res['consigneeAddressImage'])) {
+            errObj.errmsg = `${text}返回的列表中字段<consigneeAddress>、<consigneeAddressImage>有问题`;
+          } else {
+            const flag = needParams.every(function(ele) {
+              if (isEmpty(res[ele])) {
+                targetKey = ele;
+                return false;
+              }
+              return true;
+            });
+            if (!flag) {
+              errObj.errmsg = `${text}返回的列表中字段<${targetKey}>有问题`;
             }
-            return true;
-          });
-          if (!flag) {
-            errObj.errmsg = `${text}返回的列表中字段<${targetKey}>有问题`;
           }
         }
       }
@@ -209,11 +214,12 @@ function monitor(params, data) {
       if (errObj.errmsg && _response_body.result && _response_body.result.orders &&
           Array.isArray(_response_body.result.orders)) {
         errObj.detail.result.responseBody.result.orders = _response_body.result.orders.map(item => ({
+          [specialParams[0]]: item[specialParams[0]],
+          [specialParams[1]]: item[specialParams[1]],
           [needParams[0]]: item[needParams[0]],
           [needParams[1]]: item[needParams[1]],
           [needParams[2]]: item[needParams[2]],
           [needParams[3]]: item[needParams[3]],
-          [needParams[4]]: item[needParams[4]],
         }));
       }
     } else if (params.url === apis.eleGeo) { // 经纬度
