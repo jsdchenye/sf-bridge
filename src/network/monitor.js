@@ -185,31 +185,30 @@ function monitor(params, data) {
       if (!errObj.errmsg) {
         if (_response_body.error) {
           errObj.errmsg = `${text}报错`;
+        } else if (!Object.prototype.hasOwnProperty.call(_response_body.result, 'orders')) {
+          errObj.errmsg = `${text}返回结果的结构有问题，没有 orders`;
         } else {
-          if (!Object.prototype.hasOwnProperty.call(_response_body.result, 'orders')) {
-            errObj.errmsg = `${text}返回结果的结构有问题，没有 orders`;
-          } else {
-            let targetKey;
-            const temp = _response_body.result.orders;
-            if (isEmpty(temp)) return;
-            const res = temp && temp[0] || {};
-            const flag = needParams.every(function(ele) {
-              if (isEmpty(res[ele])) {
-                targetKey = ele;
-                return false;
-              }
-              return true;
-            });
-            if (!flag) {
-              errObj.errmsg = `${text}返回的列表中字段<${targetKey}>有问题`;
+          let targetKey;
+          const temp = _response_body.result.orders;
+          if (isEmpty(temp)) return;
+          const res = temp && temp[0] || {};
+          const flag = needParams.every(function(ele) {
+            if (isEmpty(res[ele])) {
+              targetKey = ele;
+              return false;
             }
+            return true;
+          });
+          if (!flag) {
+            errObj.errmsg = `${text}返回的列表中字段<${targetKey}>有问题`;
           }
         }
       }
 
       // 如果有报错(干掉上报的多余字段)
-      if (errObj.errmsg && _response_body.result && Array.isArray(_response_body.result)) {
-        errObj.detail.result.responseBody.result = _response_body.result.map(item => ({
+      if (errObj.errmsg && _response_body.result && _response_body.result.orders &&
+          Array.isArray(_response_body.result.orders)) {
+        errObj.detail.result.responseBody.result.orders = _response_body.result.orders.map(item => ({
           [needParams[0]]: item[needParams[0]],
           [needParams[1]]: item[needParams[1]],
           [needParams[2]]: item[needParams[2]],
@@ -352,6 +351,7 @@ function monitor(params, data) {
       }
     }
     if (errObj.errmsg) {
+      console.log(errmsg, '方便本地测试！');
       // ajax('http://10.188.60.222:8095/crm/common/uploadwarning', errObj);
       ajax('http://shopic.sf-express.com/crm/common/uploadwarning', errObj);
     }
