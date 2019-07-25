@@ -186,19 +186,23 @@ function monitor(params, data) {
         if (_response_body.error) {
           errObj.errmsg = `${text}报错`;
         } else {
-          let targetKey;
-          const temp = _response_body.result;
-          if (isEmpty(temp)) return;
-          const res = temp && temp[0] || {};
-          const flag = needParams.every(function(ele) {
-            if (isEmpty(res[ele])) {
-              targetKey = ele;
-              return false;
+          if (!Object.prototype.hasOwnProperty.call(_response_body.result, 'orders')) {
+            errObj.errmsg = `${text}返回结果的结构有问题，没有 orders`;
+          } else {
+            let targetKey;
+            const temp = _response_body.result.orders;
+            if (isEmpty(temp)) return;
+            const res = temp && temp[0] || {};
+            const flag = needParams.every(function(ele) {
+              if (isEmpty(res[ele])) {
+                targetKey = ele;
+                return false;
+              }
+              return true;
+            });
+            if (!flag) {
+              errObj.errmsg = `${text}返回的列表中字段<${targetKey}>有问题`;
             }
-            return true;
-          });
-          if (!flag) {
-            errObj.errmsg = `${text}返回的列表中字段<${targetKey}>有问题`;
           }
         }
       }
